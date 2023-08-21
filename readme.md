@@ -1,13 +1,13 @@
 # Launch one unique Neovim gui instance for every path
 
-## 概述
+## Brief
 
-该项目提供一个为每个工作区目录启动一个唯一的Nvim图形界面实例的方法。
+This project provides a way to launch a unique instance of the Nvim GUI for each workspace directory.
 
-* 当多次为同一个工作区启动Nvim窗口时，会在已有的窗口中执行打开文件和位置跳转指令，不会打开新的窗口。
-* 当打开不同工作区时，启动器会为每个不同的工作区启动不同的窗口。
+* When the Nvim window is launched multiple times for the same workspace, the open file and location jump instructions are executed in the existing window, and no new window is opened.
+* When different workspaces are opened, the launcher launches a different window for each different workspace.
 
-## 依赖
+## Dependency
 
 #### [neovim-remote](https://github.com/mhinz/neovim-remote.git)
 ```bash
@@ -22,15 +22,15 @@ pip install pyinstaller
 conda install -c conda-forge pyinstaller
 ```
 
-## 安装
+## Installation
 
 ```bash
 pyinstaller ./nvim_instance.py --nowindow
 ```
 
-然后，调用`dist/`目录生成的`nvim_instance`可执行文件。
+The `nvim_instance` executable is then generated in the `dist/` directory.
 
-## 使用
+## Usage
 ```bash
 <path_to_nvim_instance exec> [-h] [--exec EXEC] --project PROJECT --file FILE [--line LINE] [--column COLUMN]
 
@@ -44,15 +44,15 @@ pyinstaller ./nvim_instance.py --nowindow
                         column number to jump to
 ```
 
-## 原理
+## Principle
 
-该启动器使用路径区分不同的工作区，为每个路径分配单独的命名管道。命名管道名称： `nvim_instance_<path_basename>_<sha512 hex value for path>`。
-每次启动时先试图使用生成的管道名连接到已有的实例，连接成功则在已有实例中打开文件并跳转到指定位置。连接失败则新建一个实例，并重试。
+The initiator uses paths to distinguish between different workspaces and assigns each path a unique named pipe. Named of the Pipe: `nvim_instance_<path_basename>_<sha512 hex value for path>`.
+At each startup, the initiator first attempts to connect to the existing instance using the generated pipe name. If the connection is successful, the file is opened in the existing instance and jumps to the specified location. If the connection fails, create a new instance and try again.
 
-## 测试
+## Test
 
-已经在`Windows 10`平台进行测试。
+Tested on `Windows 10`.
 
-## 许可证
+## License
 
 [MPL 2.0](https://mozilla.org/MPL/2.0/) （c） 2023 [Chrix](https://github.com/xchrix)
