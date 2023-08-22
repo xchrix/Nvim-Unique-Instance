@@ -5,11 +5,13 @@
 该项目提供一个为每个工作区目录启动一个唯一的Nvim图形界面实例的方法。
 
 * 当多次为同一个工作区启动Nvim窗口时，会在已有的窗口中执行打开文件和位置跳转指令，不会打开新的窗口。
+* 当之前的窗口被复用时，该窗口将被唤起并聚焦于。（暂时仅支持`Windows Terminal`）
 * 当打开不同工作区时，启动器会为每个不同的工作区启动不同的窗口。
 
 ## 依赖
 
 #### [neovim-remote](https://github.com/mhinz/neovim-remote.git)
+
 ```bash
 pip3 install neovim-remote
 ```
@@ -32,10 +34,9 @@ pyinstaller ./nvim_instance.py --nowindow
 
 ## 使用
 ```bash
-<path_to_nvim_instance exec> [-h] [--exec EXEC] --project PROJECT --file FILE [--line LINE] [--column COLUMN]
+<path_to_nvim_instance exec> [-h] --project PROJECT --file FILE [--line LINE] [--column COLUMN]
 
 -h, --help            show this help message and exit
-  --exec EXEC, -e EXEC  Nvim gui command, use neovide by default
   --project PROJECT, -p PROJECT
                         project path, open same path will reuse previous window, necessary argument
   --file FILE, -f FILE  file name, necessary argument

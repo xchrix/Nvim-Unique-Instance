@@ -21,7 +21,6 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(
         description="Nvim Instance management, launch one unique Nvim GUI for one path")
-    # parser.add_argument('--exec', '-e', help='Nvim gui command, use neovide by default', default="neovide")
     parser.add_argument('--project', '-p',
                         help='project path, open same path will reuse previous window, necessary argument',
                         required=True)
@@ -32,8 +31,6 @@ if __name__ == '__main__':
     parser.add_argument(
         '--column', '-c', help='column number to jump to', default=0)
     args = parser.parse_args()
-
-    # command = args.exec
 
     # project = os.path.abspath('..')  # 测试切换目录指令是否正常工作
     # project = os.getcwd()
@@ -50,8 +47,8 @@ if __name__ == '__main__':
     hasher = hashlib.sha512()
     hasher.update(project.encode('utf-8'))
     instance_name = "nvim_instance_" + base + "_" + hasher.hexdigest()
+    window_title = base + "-" + hasher.hexdigest()[0:16]
     print(instance_name)
-    # PIPE_NAME = r"\\.\pipe\nvim_godot\home"
     PIPE_NAME = PIPE_DIR + instance_name
 
     line = args.line
@@ -69,6 +66,7 @@ if __name__ == '__main__':
 
         if ret == 0:
             print("ok")
+            ret: int = os.system("wt --window " + window_title + " focus-tab ")
             break
         else:
             print("fail to exec command")
@@ -78,9 +76,8 @@ if __name__ == '__main__':
             quit(-1)
 
         if i == 0:
-            # ret: int = os.system(command + " -- --listen " + PIPE_NAME)
-            ret: int = os.system("wt nt nvim --listen " + PIPE_NAME + " ")
-            # ret: int = os.system("neovide -- --listen " + PIPE_NAME)
+            ret: int = os.system("wt --window " + window_title
+                                 + " --fullscreen new-tab nvim --listen " + PIPE_NAME + " ")
             if ret != 0:
                 print("can not create a new nvim instance")
             else:

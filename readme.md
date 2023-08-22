@@ -4,7 +4,8 @@
 
 This project provides a way to launch a unique instance of the Nvim GUI for each workspace directory.
 
-* When the Nvim window is launched multiple times for the same workspace, the open file and location jump instructions are executed in the existing window, and no new window is opened.
+* When the Nvim window is launched multiple times for the same workspace, the open file and location jump instructions are executed in the existing window, and no new window is opened. 
+* When the previous window is reused, the window is called up and focused. (Currently, only `Windows Terminal` is supported)
 * When different workspaces are opened, the launcher launches a different window for each different workspace.
 
 ## Dependency
@@ -32,10 +33,9 @@ The `nvim_instance` executable is then generated in the `dist/` directory.
 
 ## Usage
 ```bash
-<path_to_nvim_instance exec> [-h] [--exec EXEC] --project PROJECT --file FILE [--line LINE] [--column COLUMN]
+<path_to_nvim_instance exec> [-h] --project PROJECT --file FILE [--line LINE] [--column COLUMN]
 
 -h, --help            show this help message and exit
-  --exec EXEC, -e EXEC  Nvim gui command, use neovide by default
   --project PROJECT, -p PROJECT
                         project path, open same path will reuse previous window, necessary argument
   --file FILE, -f FILE  file name, necessary argument
