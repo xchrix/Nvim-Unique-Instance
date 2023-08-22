@@ -1,5 +1,7 @@
 # Launch one unique Neovim gui instance for every path
 
+[简体中文](./readme_zh_cn.md)
+
 ## Brief
 
 This project provides a way to launch a unique instance of the Nvim GUI for each workspace directory.
@@ -11,6 +13,7 @@ This project provides a way to launch a unique instance of the Nvim GUI for each
 ## Dependency
 
 #### [neovim-remote](https://github.com/mhinz/neovim-remote.git)
+
 ```bash
 pip3 install neovim-remote
 ```
@@ -22,6 +25,10 @@ pip install pyinstaller
 # or
 conda install -c conda-forge pyinstaller
 ```
+
+#### [Windows Terminal](https://github.com/microsoft/terminal)
+
+[Install and get started setting up Windows Terminal](https://learn.microsoft.com/zh-cn/windows/terminal/install)
 
 ## Installation
 

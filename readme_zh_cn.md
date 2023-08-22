@@ -1,4 +1,6 @@
-# Launch one unique Neovim gui instance for every path
+# 为每个工作区目录启动唯一的Neovim实例
+
+[English](./readme.md)
 
 ## 概述
 
@@ -23,6 +25,11 @@ pip install pyinstaller
 # or
 conda install -c conda-forge pyinstaller
 ```
+
+#### [Windows Terminal](https://github.com/microsoft/terminal)
+
+[安装并开始设置 Windows 终端](https://learn.microsoft.com/zh-cn/windows/terminal/install)
+
 
 ## 安装
 
