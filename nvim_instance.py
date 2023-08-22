@@ -8,6 +8,7 @@
 
 import os
 import sys
+import time
 import re
 import hashlib
 import argparse
@@ -19,7 +20,7 @@ if __name__ == '__main__':
         PIPE_DIR = r"/tmp/nvim/"
 
     parser = argparse.ArgumentParser(description="Nvim Instance management, launch one unique Nvim GUI for one path")
-    parser.add_argument('--exec', '-e', help='Nvim gui command, use neovide by default', default="neovide")
+    # parser.add_argument('--exec', '-e', help='Nvim gui command, use neovide by default', default="neovide")
     parser.add_argument('--project', '-p',
                         help='project path, open same path will reuse previous window, necessary argument',
                         required=True)
@@ -28,7 +29,7 @@ if __name__ == '__main__':
     parser.add_argument('--column', '-c', help='column number to jump to', default=0)
     args = parser.parse_args()
 
-    command = args.exec
+    # command = args.exec
 
     # project = os.path.abspath('..')  # 测试切换目录指令是否正常工作
     # project = os.getcwd()
@@ -62,24 +63,24 @@ if __name__ == '__main__':
                              + " -c \"call cursor( " + str(line) + " , " + str(col) + " )  \" "
                              + " --remote " + file_name)
 
-        # retval = os.system("nvr --nostart -s --servername " + PIPE_NAME
-        #                    + " --remote "
-        #                    + "\"+cd " + project + " \" "
-        #                    + "\"+call cursor(" + str(line) + ", " + str(col) + ")\" "
-        #                    + file_name)
-
         if ret == 0:
             print("ok")
             break
+        else:
+            print("fail to exec command")
 
-        if i >= 2:
+        if i >= 30:
             print("retry too many times, fail")
             quit(-1)
 
-        ret: int = os.system(command + " -- --listen " + PIPE_NAME)
-        # ret: int = os.system("neovide -- --listen " + PIPE_NAME)
-        if ret != 0:
-            print("can not create a new nvim instance")
-        else:
-            print("create a new nvim instance")
+        if i ==0:
+            # ret: int = os.system(command + " -- --listen " + PIPE_NAME)
+            ret: int = os.system("wt nt nvim --listen " + PIPE_NAME + " ")
+            # ret: int = os.system("neovide -- --listen " + PIPE_NAME)
+            if ret != 0:
+                print("can not create a new nvim instance")
+            else:
+                print("create a new nvim instance")
+            time.sleep(0.1)
         i += 1
+
